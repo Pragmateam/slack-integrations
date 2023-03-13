@@ -21,7 +21,7 @@ provider:
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
   deploymentBucket:
-    name: sls-deployment-${self:provider.stackName}
+    name: sls-deployment-${self:service}-${sls:stage}
     serverSideEncryption: AES256
     blockPublicAccess: true
     versioning: true
