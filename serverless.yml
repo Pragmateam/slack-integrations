@@ -7,10 +7,16 @@ plugins:
   - serverless-esbuild
   - serverless-offline
 
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+    target: node16
+
 provider:
   name: aws
   runtime: nodejs16.x
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'default'}
   region: ap-southeast-2
   environment:
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
@@ -18,7 +24,7 @@ provider:
 
 functions:
   slack:
-    handler: main.handler
+    handler: lib/main.handler
     events:
       - http:
           path: slack/events

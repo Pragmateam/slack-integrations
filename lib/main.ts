@@ -1,13 +1,14 @@
-const { App, AwsLambdaReceiver, LogLevel } = require("@slack/bolt");
+import { App, AwsLambdaReceiver, LogLevel } from "@slack/bolt";
+import env from "./env";
 
 // Initializes your receiver with your app's signing secret
 const awsLambdaReceiver = new AwsLambdaReceiver({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  signingSecret: env.SLACK_SIGNING_SECRET,
 });
 
 // Initializes your app with your bot token and the AWS Lambda ready receiver
 const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
+  token: env.SLACK_BOT_TOKEN,
   receiver: awsLambdaReceiver,
   logLevel: LogLevel.WARN,
   processBeforeResponse: true,
