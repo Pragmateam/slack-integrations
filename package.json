@@ -1,13 +1,14 @@
 {
   "name": "slack-integrations",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Integrations for Slack",
+  "main": "lib/main.js",
   "scripts": {
+    "start": "serverless offline start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Igor J. Santos <igor@igorjs.io> (http://github.com/igorjs)",
+  "author": "Igor J. Santos <igor@pragma.team> (http://github.com/igorjs)",
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
     "@slack/bolt": "^3.12.2"
