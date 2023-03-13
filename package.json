@@ -1,0 +1,18 @@
+{
+  "name": "slack-integrations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Igor J. Santos <igor@igorjs.io> (http://github.com/igorjs)",
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "@slack/bolt": "^3.12.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  }
+}

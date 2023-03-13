@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "yaml.schemas": {
+    "file:///toc.schema.json": "/toc\\.yml/i",
+    "https://json.schemastore.org/github-workflow.json": ".github/*.yml"
+  }
+}
