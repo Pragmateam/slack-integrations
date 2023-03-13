@@ -6,6 +6,6 @@
   },
   "yaml.schemas": {
     "file:///toc.schema.json": "/toc\\.yml/i",
-    "https://json.schemastore.org/github-workflow.json": ".github/*.yml"
+    "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
   }
 }
