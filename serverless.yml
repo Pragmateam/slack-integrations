@@ -4,6 +4,7 @@ frameworkVersion: "3"
 useDotenv: true
 
 plugins:
+  - serverless-deployment-bucket
   - serverless-esbuild
   - serverless-offline
 
@@ -19,6 +20,11 @@ provider:
   deploymentMethod: direct
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
+  deploymentBucket:
+    name: sls-deployment-${self:provider.stackName}
+    serverSideEncryption: AES256
+    blockPublicAccess: true
+    versioning: true
   environment:
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
