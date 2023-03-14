@@ -1,0 +1,13 @@
+# Ignore artifacts:
+lib
+dist
+build
+coverage
+node_modules
+
+# Add files here to ignore them from prettier formatting
+**/lib
+**/dist
+**/coverage
+**/node_modules
+CODEOWNERS

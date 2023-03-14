@@ -1,7 +1,10 @@
 import type { App, Middleware, SlackCommandMiddlewareArgs } from "@slack/bolt";
 
-export default (app: App): Middleware<SlackCommandMiddlewareArgs>[] => [
-  async ({ ack, respond }) => {
+export default (app: App): Middleware<SlackCommandMiddlewareArgs> =>
+  async ({ ack, body, command, payload, respond }) => {
+    // Log command request on CloudWatch
+    console.log(JSON.stringify({ body, command, payload }));
+
     // Acknowledge command request
     await ack();
 
@@ -11,5 +14,4 @@ export default (app: App): Middleware<SlackCommandMiddlewareArgs>[] => [
 
     // Respond to the command request
     await respond(usersPresenceDataJson);
-  },
-];
+  };

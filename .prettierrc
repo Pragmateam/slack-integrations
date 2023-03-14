@@ -1,8 +1,23 @@
 {
-  "singleQuote": false,
   "printWidth": 80,
   "tabWidth": 2,
+  "useTabs": false,
   "semi": true,
-  "proseWrap": "always",
-  "trailingComma": "es5"
+  "singleQuote": false,
+  "bracketSpacing": true,
+  "bracketSameLine": true,
+  "trailingComma": "es5",
+  "arrowParens": "always",
+  "proseWrap": "never",
+  "importOrder": [
+    "^(angular|react)(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@lib/(.*)$",
+    "^[../]",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true,
+  "importOrderGroupNamespaceSpecifiers": true
 }

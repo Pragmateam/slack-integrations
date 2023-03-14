@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "target": "ES5",
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "useDefineForClassFields": true,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "useUnknownInCatchVariables": true,
+    "resolveJsonModule": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "strict": true
+  },
+  "include": ["."],
+  "exclude": ["lib/", "build/", "node_modules/"]
+}

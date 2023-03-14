@@ -1,5 +1,13 @@
 import { App, AwsLambdaReceiver, LogLevel } from "@slack/bolt";
+import {
+  AwsCallback,
+  AwsEvent,
+} from "@slack/bolt/dist/receivers/AwsLambdaReceiver";
+
 import env from "./env";
+
+/// Commands
+import whereabouts from "./commands/whereabouts";
 
 // Initializes your receiver with your app's signing secret
 const awsLambdaReceiver = new AwsLambdaReceiver({
@@ -10,15 +18,15 @@ const awsLambdaReceiver = new AwsLambdaReceiver({
 const app = new App({
   token: env.SLACK_BOT_TOKEN,
   receiver: awsLambdaReceiver,
-  logLevel: LogLevel.WARN,
+  logLevel: LogLevel.DEBUG,
   processBeforeResponse: true,
 });
 
 // Listen for slash commands
-app.command("/whereabouts", require("./commands/whereabouts")(app));
+app.command("/whereabouts", whereabouts(app));
 
 // Handle the Lambda function event
-module.exports.handler = async (event, context, callback) => {
+export const handler = async (event: AwsEvent, ctx: any, cb: AwsCallback) => {
   const handler = await awsLambdaReceiver.start();
-  return handler(event, context, callback);
+  return handler(event, ctx, cb);
 };

@@ -20,6 +20,7 @@ provider:
   deploymentMethod: direct
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
+  architecture: arm64
   deploymentBucket:
     name: sls-deployment-${self:service}-${sls:stage}
     serverSideEncryption: AES256
@@ -33,6 +34,6 @@ functions:
   endpoint:
     handler: lib/main.handler
     events:
-      - http:
-          path: slack/events
+      - httpApi:
+          path: /slack/events
           method: post
