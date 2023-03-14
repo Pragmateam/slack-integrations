@@ -2,19 +2,6 @@
   "name": "slack-integrations",
   "version": "1.0.0",
   "description": "Integrations for Slack",
-  "main": "./lib/main.js",
-  "scripts": {
-    "postinstall": "husky install",
-    "clean": "shx rm -rf node_modules && shx echo Done",
-    "start": "serverless offline start",
-    "lint": "eslint src/**",
-    "format": "prettier --write \"./**/*.{ts,tsx}\"",
-    "codestyle": "prettier --check \"./**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit",
-    "test": "jest --passWithNoTests",
-    "test:ci": "jest --ci --runInBand --passWithNoTests --coverage --watchAll=false",
-    "test:watch": "jest --watch"
-  },
   "keywords": [
     "slack",
     "integrations",
@@ -33,6 +20,19 @@
     }
   ],
   "license": "SEE LICENSE IN LICENSE",
+  "main": "./lib/main.js",
+  "scripts": {
+    "postinstall": "husky install",
+    "clean": "shx rm -rf node_modules .serverless .esbuild .cache",
+    "start": "serverless offline start",
+    "lint": "eslint src/**",
+    "format": "prettier --write \"./**/*.{ts,tsx}\"",
+    "codestyle": "prettier --check \"./**/*.{ts,tsx}\"",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --passWithNoTests",
+    "test:ci": "jest --ci --runInBand --passWithNoTests --coverage --watchAll=false",
+    "test:watch": "jest --watch"
+  },
   "dependencies": {
     "@slack/bolt": "^3.12.2",
     "zod": "^3.21.4"
