@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 16
           cache: npm
-      - run: npm ci
+      - run: npm install
       - uses: serverless/github-action@v3.1
         with:
           args: deploy
