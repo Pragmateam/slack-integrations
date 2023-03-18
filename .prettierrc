@@ -12,8 +12,9 @@
   "importOrder": [
     "^(angular|react)(.*)$",
     "<THIRD_PARTY_MODULES>",
-    "^@lib/(.*)$",
+    "^@src/(.*)$",
     "^[../]",
+    "^./app",
     "^[./]"
   ],
   "importOrderSeparation": true,

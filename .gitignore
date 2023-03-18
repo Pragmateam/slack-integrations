@@ -96,6 +96,7 @@ dist
 
 # Serverless directories
 .serverless/
+.webpack/
 
 # FuseBox cache
 .fusebox/
@@ -109,3 +110,11 @@ dist
 # SO files
 .DS_Store
 thumbs.db
+
+# Project files
+# .idea/
+# .vscode/
+# .vscode-test/
+src/**/*.d.ts
+src/**/*.d.ts.map
+!src/@types/**/*.d.ts
