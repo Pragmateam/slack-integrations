@@ -27,7 +27,7 @@ provider:
   deploymentMethod: direct
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
-  timeout: 60
+  timeout: 900
   architecture: arm64
   deploymentBucket:
     name: sls-deployment-${self:service}-${sls:stage}
