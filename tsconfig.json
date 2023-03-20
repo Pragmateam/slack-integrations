@@ -31,8 +31,13 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "alwaysStrict": true,
-    "strict": true
+    "strict": true,
+    "outDir": ".webpack/service/src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["."],
-  "exclude": ["lib/", "build/", "node_modules/"]
+  "include": ["src/**/*"],
+  "exclude": ["build/", "node_modules/"]
 }

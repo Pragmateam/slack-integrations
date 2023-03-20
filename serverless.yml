@@ -5,14 +5,21 @@ useDotenv: true
 
 plugins:
   - serverless-deployment-bucket
-  - serverless-esbuild
+  - serverless-webpack
   - serverless-offline
 
 custom:
-  esbuild:
-    bundle: true
-    minify: false
-    target: node16
+  webpack:
+    webpackConfig: webpack.config.js
+    excludeRegex: \.ts|\.test.ts|\.spec.ts|\.d.ts|\.map
+    keepOutputDirectory: false
+    serializedCompile: true
+    packager: npm
+  serverless-offline:
+    allowCache: true
+
+package:
+  individually: true
 
 provider:
   name: aws
@@ -20,6 +27,7 @@ provider:
   deploymentMethod: direct
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
+  timeout: 900
   architecture: arm64
   deploymentBucket:
     name: sls-deployment-${self:service}-${sls:stage}
@@ -32,7 +40,7 @@ provider:
 
 functions:
   endpoint:
-    handler: lib/main.handler
+    handler: src/main.handler
     events:
       - httpApi:
           path: /slack/events
