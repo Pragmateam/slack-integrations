@@ -117,4 +117,5 @@ thumbs.db
 # .vscode-test/
 src/**/*.d.ts
 src/**/*.d.ts.map
+!src/**/global.d.ts
 !src/@types/**/*.d.ts

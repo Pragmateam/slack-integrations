@@ -24,11 +24,11 @@ package:
 provider:
   name: aws
   runtime: nodejs16.x
-  deploymentMethod: direct
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
   timeout: 900
   architecture: arm64
+  deploymentMethod: direct
   deploymentBucket:
     name: sls-deployment-${self:service}-${sls:stage}
     serverSideEncryption: AES256
@@ -45,3 +45,8 @@ functions:
       - httpApi:
           path: /slack/events
           method: post
+
+  # example-job:
+  #   handler: src/jobs/example.job
+  #   events:
+  #     - schedule: cron(0/2 * ? * MON-FRI *)

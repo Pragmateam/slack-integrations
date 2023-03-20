@@ -45,6 +45,7 @@
     "@slack/types": "^2.8.0",
     "@slack/web-api": "^6.8.1",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@types/aws-lambda": "^8.10.114",
     "@types/jest": "^29.4.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.54.1",
