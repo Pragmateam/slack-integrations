@@ -46,6 +46,7 @@ functions:
           path: /slack/events
           method: post
 
+  ## See the docs: https://www.serverless.com/examples/aws-node-scheduled-cron
   # example-job:
   #   handler: src/jobs/example.job
   #   events:
