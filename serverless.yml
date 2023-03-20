@@ -6,6 +6,7 @@ useDotenv: true
 plugins:
   - serverless-deployment-bucket
   - serverless-webpack
+  - serverless-dynamodb-local
   - serverless-offline
 
 custom:
@@ -17,6 +18,15 @@ custom:
     packager: npm
   serverless-offline:
     allowCache: true
+  dynamodb:
+    stages:
+      - default
+    start:
+      docker: true
+      port: 8000
+      inMemory: true
+      migrate: true
+      convertEmptyValues: true
 
 package:
   individually: true
@@ -45,3 +55,36 @@ functions:
       - httpApi:
           path: /slack/events
           method: post
+
+resources:
+  Resources:
+    avacadoUsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: avacadoUsersTable
+        AttributeDefinitions:
+          - AttributeName: slackID
+            AttributeType: S
+          - AttributeName: harvestAccountID
+            AttributeType: S
+          - AttributeName: harvestPAT
+            AttributeType: S
+        KeySchema:
+          - AttributeName: slackID
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: pk-harvest
+            KeySchema:
+              - AttributeName: harvestAccountID
+                KeyType: HASH
+              - AttributeName: harvestPAT
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
