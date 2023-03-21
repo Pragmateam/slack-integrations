@@ -1,4 +1,6 @@
 /// Slash Commands Imports
+import local from "@/commands/local";
+import skills from "@/commands/skills";
 import whereabouts from "@/commands/whereabouts";
 
 /// App Imports
@@ -13,6 +15,8 @@ import app, {
 app.error(errorHandler);
 
 /// Commands
+app.command("/local", local());
+app.command("/skills", skills());
 app.command("/whereabouts", whereabouts());
 
 /// AWS Lambda Handler
