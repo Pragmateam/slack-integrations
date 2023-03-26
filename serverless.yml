@@ -27,6 +27,7 @@ provider:
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
   timeout: 900
+  memorySize: 1024
   architecture: arm64
   deploymentMethod: direct
   deploymentBucket:
