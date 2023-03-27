@@ -16,8 +16,12 @@ custom:
       enabled: false
     officeHoursWarmer:
       enabled: true
+      prewarm: true
       events:
-        - schedule: rate(10 minutes)
+        - schedule: cron(0/10 0-7 ? * TUE-SAT *)
+        - schedule: cron(0/10 21-23 ? * TUE-SAT *)
+        # - schedule: rate(10 minutes)
+      architecture: arm64
       concurrency: 10
       verbose: true
       logRetentionInDays: 14
@@ -71,4 +75,4 @@ functions:
   # example-job:
   #   handler: src/jobs/example.job
   #   events:
-  #     - schedule: cron(0/10 * * * MON-FRI *)
+  #     - schedule: cron(0/2 * ? * MON-FRI *)
