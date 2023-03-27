@@ -56,7 +56,6 @@ provider:
 
 functions:
   endpoint:
-    timeout: 900
     memorySize: 1024
     handler: src/main.handler
     events:
