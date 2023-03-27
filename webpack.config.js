@@ -8,6 +8,7 @@ module.exports = (async () => {
   const accountId = await slsw.lib.serverless.providers.aws.getAccountId();
   return {
     mode: slsw.lib.webpack.isLocal ? "development" : "production",
+    devtool: slsw.lib.webpack.isLocal ? "inline-source-map" : "none",
     stats: "minimal",
     entry: slsw.lib.entries,
     target: "node",
