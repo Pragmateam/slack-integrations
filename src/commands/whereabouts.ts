@@ -47,13 +47,16 @@ const userPresenceMapper = (client: WebClient) => async (member: Member) => {
 export default (): Middleware<SlackCommandMiddlewareArgs> => {
   return async ({ ack, body, client, command, logger, payload, respond }) => {
     // Log command request on CloudWatch
-    logger.info("BODY", JSON.stringify(body, null, 2));
-    logger.info("COMMAND", JSON.stringify(command, null, 2));
-    logger.info("PAYLOAD", JSON.stringify(payload, null, 2));
-    logger.info("PAYLOAD::TEXT", payload.text);
+    logger.debug("BODY", JSON.stringify(body, null, 2));
+    logger.debug("COMMAND", JSON.stringify(command, null, 2));
+    logger.debug("PAYLOAD", JSON.stringify(payload, null, 2));
+    logger.debug("PAYLOAD::TEXT", payload.text);
 
     // Acknowledge command request
-    await ack();
+    await ack({
+      response_type: "ephemeral",
+      text: "*Working on it...* :hourglass_flowing_sand: ",
+    });
 
     // Get all users
     const users = await client.users.list();

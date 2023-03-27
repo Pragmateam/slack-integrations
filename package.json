@@ -25,7 +25,7 @@
     "clean": "shx rm -rf node_modules .serverless .esbuild .cache",
     "dev": "serverless offline start",
     "start": "concurrently -c \"auto\" \"npm run dev\" \"npm run tunnel\"",
-    "tunnel": "lt --port 3000 --subdomain slack-integrations",
+    "tunnel": "lt --port 3000 --subdomain $(dig +short myip.opendns.com @resolver1.opendns.com | tr . -)",
     "lint": "eslint src/**",
     "format": "prettier --write \"./**/*.{ts,tsx}\"",
     "codestyle": "prettier --check \"./**/*.{ts,tsx}\"",
