@@ -37,8 +37,8 @@ provider:
   runtime: nodejs16.x
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
-  timeout: 900
-  memorySize: 1024
+  timeout: 30
+  memorySize: 512
   architecture: arm64
   logRetentionInDays: 30
   deploymentMethod: direct
@@ -56,6 +56,7 @@ provider:
 
 functions:
   endpoint:
+    timeout: 900
     memorySize: 1024
     handler: src/main.handler
     events:
