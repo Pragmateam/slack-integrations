@@ -30,7 +30,13 @@ module.exports = (async () => {
       extensions: [".tsx", ".ts", ".js", ".json"],
       plugins: [new TsconfigPathsPlugin()],
     },
-    externals: ["aws-sdk", "bufferutil", "express", "utf-8-validate"],
+    externals: [
+      "@aws-sdk/util-user-agent-node",
+      "aws-sdk",
+      "bufferutil",
+      "express",
+      "utf-8-validate",
+    ],
     output: {
       libraryTarget: "commonjs",
       path: path.resolve(__dirname, ".webpack"),

@@ -17,7 +17,7 @@ custom:
     officeHoursWarmer:
       enabled: true
       events:
-        - schedule: cron(*/10 0-7,21-23 * * 2-6 *) # SYDNEY BUSINESS HOURS
+        - schedule: rate(10 minutes)
       concurrency: 10
       verbose: true
       logRetentionInDays: 14
@@ -71,4 +71,4 @@ functions:
   # example-job:
   #   handler: src/jobs/example.job
   #   events:
-  #     - schedule: cron(0/2 * ? * MON-FRI *)
+  #     - schedule: cron(0/10 * * * MON-FRI *)
