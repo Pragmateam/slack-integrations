@@ -4,6 +4,7 @@ import { ExtendedErrorHandler } from "@slack/bolt/dist/App";
 import { ConsoleLogger } from "@slack/logger";
 
 export type { AwsHandler } from "@slack/bolt/dist/receivers/AwsLambdaReceiver";
+export type { AwsResponse } from "@slack/bolt/dist/receivers/AwsLambdaReceiver";
 
 // Initializes your receiver with your app's signing secret
 export const awsLambdaReceiver = new AwsLambdaReceiver({

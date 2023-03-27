@@ -97,6 +97,7 @@ dist
 # Serverless directories
 .serverless/
 .webpack/
+.warmup/
 
 # FuseBox cache
 .fusebox/

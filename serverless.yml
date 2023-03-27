@@ -5,10 +5,21 @@ useDotenv: true
 
 plugins:
   - serverless-deployment-bucket
+  - serverless-plugin-warmup
   - serverless-webpack
   - serverless-offline
 
 custom:
+  warmup:
+    default:
+      enabled: false
+    officeHoursWarmer:
+      enabled: true
+      events:
+        - schedule: cron(0/5 8-17 ? * MON-FRI *)
+      concurrency: 10
+      verbose: true
+      logRetentionInDays: 10
   webpack:
     webpackConfig: webpack.config.js
     excludeRegex: \.ts|\.test.ts|\.spec.ts|\.d.ts|\.map
@@ -26,20 +37,26 @@ provider:
   runtime: nodejs16.x
   stage: ${opt:stage, 'default'}
   region: ap-southeast-2
-  timeout: 900
+  timeout: 30
+  memorySize: 512
   architecture: arm64
+  logRetentionInDays: 30
   deploymentMethod: direct
   deploymentBucket:
     name: sls-deployment-${self:service}-${sls:stage}
     serverSideEncryption: AES256
     blockPublicAccess: true
     versioning: true
+  httpApi:
+    cors: true
+    metrics: true
   environment:
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
 
 functions:
   endpoint:
+    timeout: 900
     memorySize: 1024
     handler: src/main.handler
     events:
