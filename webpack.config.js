@@ -1,4 +1,3 @@
-// Version if the local Node.js version supports async/await
 // webpack.config.js
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const webpack = require("webpack");
