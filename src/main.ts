@@ -13,7 +13,7 @@ import app, {
 app.error(errorHandler);
 
 /// Commands
-app.command("/whereabouts", whereabouts(app));
+app.command("/whereabouts", whereabouts());
 
 /// AWS Lambda Handler
 export const handler: AwsHandler = async (event, context, callback) => {

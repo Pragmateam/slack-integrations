@@ -1,6 +1,7 @@
 import * as array from "@/utils/array";
 import * as json from "@/utils/json";
-import type { App, Middleware, SlackCommandMiddlewareArgs } from "@slack/bolt";
+import type { Middleware, SlackCommandMiddlewareArgs } from "@slack/bolt";
+import { WebClient } from "@slack/web-api";
 import { Member } from "@slack/web-api/dist/response/UsersListResponse";
 
 const PRAGMATEAM_EMAIL_DOMAIN = "@pragma.team";
@@ -16,8 +17,8 @@ const predicates = {
   realUsers: (m: Member) => !m.is_app_user && !m.is_bot && !m.is_workflow_bot,
 };
 
-const activeUserPresenceMapper = (app: App) => async (member: Member) => {
-  const userPresence = await app.client.users.getPresence({
+const userPresenceMapper = (client: WebClient) => async (member: Member) => {
+  const userPresence = await client.users.getPresence({
     user: member.id!,
   });
 
@@ -43,8 +44,8 @@ const activeUserPresenceMapper = (app: App) => async (member: Member) => {
   };
 };
 
-export default (app: App): Middleware<SlackCommandMiddlewareArgs> => {
-  return async ({ ack, body, command, logger, payload, respond }) => {
+export default (): Middleware<SlackCommandMiddlewareArgs> => {
+  return async ({ ack, body, client, command, logger, payload, respond }) => {
     // Log command request on CloudWatch
     logger.info("BODY", JSON.stringify(body, null, 2));
     logger.info("COMMAND", JSON.stringify(command, null, 2));
@@ -55,7 +56,7 @@ export default (app: App): Middleware<SlackCommandMiddlewareArgs> => {
     await ack();
 
     // Get all users
-    const users = await app.client.users.list();
+    const users = await client.users.list();
 
     // When something goes wrong, respond with a generic error message
     if (!users.ok) {
@@ -73,11 +74,9 @@ export default (app: App): Middleware<SlackCommandMiddlewareArgs> => {
       predicates.realUsers
     );
 
-    const activeUserPresenceMapperFn = activeUserPresenceMapper(app);
-
     // Get all members presence (a.k.a. status -> active, away, etc.)
     const members = await Promise.all(
-      activeUsers?.map(activeUserPresenceMapperFn)
+      activeUsers?.map(userPresenceMapper(client))
     );
 
     // TODO: remove this line
