@@ -19,7 +19,6 @@ custom:
         - schedule: cron(0/5 8-17 ? * MON-FRI *)
       concurrency: 10
       verbose: true
-      logRetentionInDays: 10
   webpack:
     webpackConfig: webpack.config.js
     excludeRegex: \.ts|\.test.ts|\.spec.ts|\.d.ts|\.map
