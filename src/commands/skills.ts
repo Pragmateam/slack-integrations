@@ -8,18 +8,9 @@ const auth = new GoogleSheets.auth.GoogleAuth({
 });
 
 export default (): Middleware<SlackCommandMiddlewareArgs> => {
-  const authClient = await auth.getClient();
-
-  const client = GoogleSheets.sheets({
-    version: "v4",
-    auth: authClient,
-  });
-
-  return async ({ ack, body, command, payload, respond }) => {
+  return async ({ ack, body, command, logger, payload, respond }) => {
     // Acknowledge command request
     await ack();
-
-
 
     // Log command request on CloudWatch
     console.log("BODY", JSON.stringify(body));
@@ -27,14 +18,21 @@ export default (): Middleware<SlackCommandMiddlewareArgs> => {
     console.log("PAYLOAD", JSON.stringify(payload));
     console.log("PAYLOAD::TEXT", payload.text);
 
+    const authClient = await auth.getClient();
 
-    const createResponse = await client.spreadsheets.get({
-      ranges: string[];
-      spreadsheetId: string;
+    const client = GoogleSheets.sheets({
+      version: "v4",
+      auth: authClient,
     });
 
+    const createResponse = await client.spreadsheets.get({
+      ranges: [],
+      spreadsheetId: "",
+    });
+
+    logger.debug("CREATE_RESPONSE", createResponse);
 
     // Respond to the command request
     await respond("It works!");
   };
-}
+};
