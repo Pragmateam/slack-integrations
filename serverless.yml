@@ -40,12 +40,16 @@ provider:
   timeout: 900
   memorySize: 1024
   architecture: arm64
+  logRetentionInDays: 30
   deploymentMethod: direct
   deploymentBucket:
     name: sls-deployment-${self:service}-${sls:stage}
     serverSideEncryption: AES256
     blockPublicAccess: true
     versioning: true
+  httpApi:
+    cors: true
+    metrics: true
   environment:
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
