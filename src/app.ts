@@ -1,7 +1,7 @@
 import env from "@/env";
 import { App, AwsLambdaReceiver } from "@slack/bolt";
 import { ExtendedErrorHandler } from "@slack/bolt/dist/App";
-import { ConsoleLogger, LogLevel } from "@slack/logger";
+import { ConsoleLogger } from "@slack/logger";
 
 export type { AwsHandler } from "@slack/bolt/dist/receivers/AwsLambdaReceiver";
 
@@ -14,7 +14,7 @@ export const awsLambdaReceiver = new AwsLambdaReceiver({
 export const app = new App({
   token: env.SLACK_BOT_TOKEN,
   logger: new ConsoleLogger(),
-  logLevel: LogLevel.DEBUG,
+  logLevel: env.LOG_LEVEL,
   extendedErrorHandler: true,
   processBeforeResponse: true,
   receiver: awsLambdaReceiver,
