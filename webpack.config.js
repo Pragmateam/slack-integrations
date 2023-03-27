@@ -1,7 +1,6 @@
 // Version if the local Node.js version supports async/await
 // webpack.config.js
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
-const nodeExternals = require("webpack-node-externals");
 const webpack = require("webpack");
 const path = require("path");
 const slsw = require("serverless-webpack");
@@ -31,9 +30,6 @@ module.exports = (async () => {
       extensions: [".tsx", ".ts", ".js", ".json"],
       plugins: [new TsconfigPathsPlugin()],
     },
-    // we use webpack-node-externals to excludes all node deps.
-    // You can manually set the externals too.
-    externals: [nodeExternals()],
     output: {
       libraryTarget: "commonjs",
       path: path.resolve(__dirname, ".webpack"),
