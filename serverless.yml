@@ -58,6 +58,7 @@ provider:
     cors: true
     metrics: true
   environment:
+    LOG_LEVEL: debug
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
 
