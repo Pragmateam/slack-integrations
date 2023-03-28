@@ -53,9 +53,10 @@ export default (): Middleware<SlackCommandMiddlewareArgs> => {
     logger.debug("PAYLOAD::TEXT", payload.text);
 
     // Acknowledge command request
-    await ack({
+    await respond({
       response_type: "ephemeral",
       text: "*Working on it...* :hourglass_flowing_sand: ",
+      as_user: true,
     });
 
     // Get all users
@@ -63,7 +64,7 @@ export default (): Middleware<SlackCommandMiddlewareArgs> => {
 
     // When something goes wrong, respond with a generic error message
     if (!users.ok) {
-      await respond({
+      await ack({
         response_type: "ephemeral",
         text: "Something went wrong! Please try again later.",
         as_user: true,
@@ -86,7 +87,7 @@ export default (): Middleware<SlackCommandMiddlewareArgs> => {
     logger.debug("MEMBERS", members);
 
     // Respond to the command request
-    await respond({
+    await ack({
       response_type: "ephemeral",
       text: json.toFormattedString(members),
       as_user: true,
