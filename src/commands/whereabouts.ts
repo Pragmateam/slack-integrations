@@ -23,7 +23,7 @@ const userPresenceMapper = (client: WebClient) => async (member: Member) => {
 
   return {
     ...member,
-    presence: userPresence.ok ? { ...userPresence } : "unknown",
+    presence: userPresence.ok ? userPresence.presence : "unknown",
 
     // image: user.profile?.image_24,
     // name: `${user.profile?.real_name_normalized} (${user.profile?.display_name_normalized})`,
@@ -46,13 +46,7 @@ const userPresenceMapper = (client: WebClient) => async (member: Member) => {
 export default (): Middleware<SlackCommandMiddlewareArgs> => {
   return async ({ ack, body, client, command, logger, payload, respond }) => {
     // Acknowledge command request
-    await ack({
-      response_type: "ephemeral",
-      text: "*Working on it...* :hourglass_flowing_sand: ",
-      replace_original: true,
-      delete_original: true,
-      as_user: true,
-    });
+    await ack();
 
     // await respond({
     //   response_type: "ephemeral",
@@ -80,10 +74,8 @@ export default (): Middleware<SlackCommandMiddlewareArgs> => {
       });
     }
 
-    const activeUsers = array.filterByPredicate(
-      users.members!,
-      predicates.realActiveUsers,
-      predicates.pragmaUsers
+    const activeUsers = users.members!.filter((item) =>
+      predicates.pragmaUsers(item) && predicates.realActiveUsers(item)
     );
 
     // Get all members presence (a.k.a. status -> active, away, etc.)
@@ -94,7 +86,9 @@ export default (): Middleware<SlackCommandMiddlewareArgs> => {
     // TODO: remove this line
     logger.debug("MEMBERS", members);
 
-    const response = members.map((m) => `${m.name} (${m.presence})`).join("\n");
+    const response = members.map((m) => `<@${m.id}> (${m.presence})`).join("\n");
+
+    logger.debug("last member:", members[members.length - 1]);
 
     // Respond to the command request
     await respond({
