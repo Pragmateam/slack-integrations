@@ -88,8 +88,6 @@ export default (): Middleware<SlackCommandMiddlewareArgs> => {
 
     const response = members.map((m) => `<@${m.id}> (${m.presence})`).join("\n");
 
-    logger.debug("last member:", members[members.length - 1]);
-
     // Respond to the command request
     await respond({
       response_type: "ephemeral",
