@@ -17,7 +17,6 @@ export const app = new App({
   logger: new ConsoleLogger(),
   logLevel: env.LOG_LEVEL,
   extendedErrorHandler: true,
-  processBeforeResponse: true,
   receiver: awsLambdaReceiver,
 });
 
