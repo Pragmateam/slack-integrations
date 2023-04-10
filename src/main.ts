@@ -21,6 +21,8 @@ app.command("/whereabouts", whereabouts());
 
 /// AWS Lambda Handler
 export const handler: AwsHandler = async (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
   /** Immediate response for WarmUp plugin */
   if ("source" in event && event.source === "serverless-plugin-warmup") {
     console.log("WarmUp - Lambda is warm!");
