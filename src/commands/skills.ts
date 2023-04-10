@@ -2,17 +2,23 @@ import { toFormattedString } from "@/utils/json";
 import type { Middleware, SlackCommandMiddlewareArgs } from "@slack/bolt";
 
 export default (): Middleware<SlackCommandMiddlewareArgs> => {
-  return async ({ ack, body, command, logger, payload, respond }) => {
+  return async (args: CommandHandlerArgs) => {
+    const { body, command, payload, respond, logger, ack } = args;
+
     // Log command request on CloudWatch
-    logger.info("BODY", toFormattedString(body));
-    logger.info("COMMAND", toFormattedString(command));
-    logger.info("PAYLOAD", toFormattedString(payload));
-    logger.info("PAYLOAD::TEXT", payload.text);
+    logger.debug("BODY", toFormattedString(body));
+    logger.debug("COMMAND", toFormattedString(command));
+    logger.debug("PAYLOAD", toFormattedString(payload));
+    logger.debug("PAYLOAD::TEXT", payload.text);
 
     // Acknowledge command request
     await ack();
 
     // Respond to the command request
-    await respond("It works!");
+    await respond({
+      response_type: "ephemeral",
+      text: "It works!",
+      as_user: true,
+    });
   };
 };

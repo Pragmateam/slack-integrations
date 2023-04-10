@@ -1,10 +1,8 @@
-import type { AllMiddlewareArgs, Middleware, SlackCommandMiddlewareArgs } from "@slack/bolt";
-import { StringIndexed } from "@slack/bolt/dist/types/helpers";
+import { deferredExecute } from "@/utils/helpers";
+import { toFormattedString } from "@/utils/json";
+import type { Middleware, SlackCommandMiddlewareArgs } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
 import { Member } from "@slack/web-api/dist/response/UsersListResponse";
-import { deferredExecute } from "@/utils/helpers";
-
-type CommandArgs = Omit<SlackCommandMiddlewareArgs & AllMiddlewareArgs<StringIndexed>, "ack">;
 
 const PRAGMATEAM_EMAIL_DOMAIN = "@pragma.team";
 
@@ -17,23 +15,27 @@ const isActiveUser = (m: Member) =>
 const userPresenceMapper = (client: WebClient) => async (member: Member) => {
   const userPresence = await client.users.getPresence({ user: member.id! });
 
-  return `<@${member.id}> (${userPresence.ok ? userPresence.presence : "unknown"})`;
+  return `<@${member.id}> (${
+    userPresence.ok ? userPresence.presence : "unknown"
+  })`;
 };
 
-const handleCommand = async ({ body, command, payload, respond, logger, client }: CommandArgs) => {
+const handleCommand = async (args: CommandHandlerArgs) => {
+  const { body, command, payload, respond, logger, client } = args;
+
   try {
     // Log command request on CloudWatch
-    logger.debug("BODY", JSON.stringify(body, null, 2));
-    logger.debug("COMMAND", JSON.stringify(command, null, 2));
-    logger.debug("PAYLOAD", JSON.stringify(payload, null, 2));
+    logger.debug("BODY", toFormattedString(body));
+    logger.debug("COMMAND", toFormattedString(command));
+    logger.debug("PAYLOAD", toFormattedString(payload));
     logger.debug("PAYLOAD::TEXT", payload.text);
 
     // Get all users
     const { ok, members } = await client.users.list();
     if (!ok) throw new Error("Failed to retrieve user list");
 
-    const activePragmaUsers = members!.filter((item) =>
-      isPragmaUser(item) && isActiveUser(item)
+    const activePragmaUsers = members!.filter(
+      (item: Member) => isPragmaUser(item) && isActiveUser(item)
     );
 
     // Get all members presence (a.k.a. status -> active, away, etc.)
@@ -61,9 +63,11 @@ const handleCommand = async ({ body, command, payload, respond, logger, client }
 };
 
 export default (): Middleware<SlackCommandMiddlewareArgs> => {
-  return async ({ ack, ...args }) => {
+  return async (args: CommandHandlerArgs) => {
+    const { ack } = args;
+
     // Offload expensive tasks to a different turn in the EventLoop
-    deferredExecute(handleCommand, undefined, { ...args });
+    deferredExecute(handleCommand, undefined, args);
 
     // Acknowledge command request immediately within 3s
     await ack();
